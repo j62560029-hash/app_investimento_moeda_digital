@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberVest // Simulador Quantitativo</title>
+    <style>
+        :root {
+            --bg-color: #05020a;
+            --purple-glow: rgba(147, 51, 234, 0.2);
+            --neon-purple: #a855f7;
+            --neon-green: #22c55e;
+            --text-color: #e2e8f0;
+            --glass-bg: rgba(15, 10, 25, 0.75);
+            --glass-border: rgba(168, 85, 247, 0.4);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: radial-gradient(circle at 50% 50%, #1a0b2e 0%, #05020a 100%);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 30px;
+            max-width: 1100px;
+            width: 90%;
+            padding: 20px;
+            z-index: 10;
+        }
+
+        /* Glassmorphism Effect */
+        .glass-card {
+            flex: 1;
+            min-width: 320px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.7),
+                        0 0 20px var(--purple-glow);
+        }
+
+        h2 {
+            color: var(--neon-green);
+            border-bottom: 2px dashed var(--neon-purple);
+            padding-bottom: 10px;
+            margin-top: 0;
+            text-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            color: var(--neon-purple);
+            text-shadow: 0 0 5px rgba(168, 85, 247, 0.5);
+            margin-top: 0;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        input {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--neon-purple);
+            padding: 12px;
+            color: var(--neon-green);
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1rem;
+            border-radius: 6px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            box-shadow: 0 0 12px var(--neon-purple);
+            border-color: var(--neon-green);
+        }
+
+        button {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+            padding: 14px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 0 4px var(--neon-green);
+            border-radius: 6px;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            background: var(--neon-green);
+            color: var(--bg-color);
+            box-shadow: 0 0 20px var(--neon-green);
+        }
+
+        .result-box {
+            margin-top: 25px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border-left: 4px solid var(--neon-green);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .crypto-strategy {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+        }
+        
+        .crypto-strategy:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #cbd5e1;
+        }
+    </style>
+</head>
+<body>
+    
+    <main class="container">
+        <!-- Calculadora de Investimento -->
+        <section class="glass-card">
+            <h2>[ SIMULADOR_QUANTICO ]</h2>
+            <div class="input-group">
+                <label for="initial-investment">Aporte Inicial (R$)</label>
+                <input type="number" id="initial-investment" placeholder="Ex: 1000" value="1000">
+            </div>
+            <div class="input-group">
+                <label for="monthly-investment">Aporte Mensal (R$)</label>
+                <input type="number" id="monthly-investment" placeholder="Ex: 200" value="200">
+            </div>
+            <div class="input-group">
+                <label for="target-goal">Objetivo Final (R$)</label>
+                <input type="number" id="target-goal" placeholder="Ex: 50000" value="50000">
+            </div>
+            <div class="input-group">
+                <label for="annual-rate">Taxa Estimada Anual (%)</label>
+                <input type="number" id="annual-rate" placeholder="Ex: 12" value="12">
+            </div>
+            <button onclick="calcularTempo()">EXECUTAR PROJEÇÃO</button>
+            
+            <div id="result" class="result-box">
+                // AGUARDANDO PROTOCOLO DE INICIALIZAÇÃO...
+            </div>
+        </section>
+
+        <!-- Estratégias de Alocação -->
+        <section class="glass-card">
+            <h2>[ PROTOCOLOS_DE_ALOCAÇÃO ]</h2>
+            
+            <div class="crypto-strategy">
+                <h3>BTC // Bitcoin (Reserva de Valor)</h3>
+                <p><strong>Perfil:</strong> Estratégico / Proteção Soberana.</p>
+                <p><strong>Estratégia DCA (Dollar Cost Averaging):</strong> Aportes constantes e automatizados mitigam a volatilidade do mercado de ativos digitais. Recomendado alocar entre 40% a 60% da carteira cripto em BTC para estabilização de longo prazo.</p>
+            </div>
+
+            <div class="crypto-strategy">
+                <h3>ADA // Cardano (Smart Contracts)</h3>
+                <p><strong>Perfil:</strong> Crescimento / Inovação Tecnológica.</p>
+                <p><strong>Estratégia de Staking Nativo:</strong> Delegação de moedas em redes de validação (Proof of Stake) para geração de rendimento passivo contínuo (~3% a 4% ao ano em tokens nativos), potencializando juros compostos de forma descentralizada.</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function calcularTempo() {
+            const aporteInicial = parseFloat(document.getElementById('initial-investment').value) || 0;
+            const aporteMensal = parseFloat(document.getElementById('monthly-investment').value) || 0;
+            const objetivo = parseFloat(document.getElementById('target-goal').value) || 0;
+            const taxaAnual = parseFloat(document.getElementById('annual-rate').value) || 0;
+            
+            const resultBox = document.getElementById('result');
+
+            if (objetivo <= aporteInicial) {
+                resultBox.innerHTML = `[ERRO] Objetivo já alcançado ou menor que o aporte inicial.`;
+                return;
+            }
+            if (aporteMensal <= 0 && taxaAnual <= 0) {
+                resultBox.innerHTML = `[ERRO] Impossível atingir o objetivo sem aportes ou rentabilidade.`;
+                return;
+            }
+
+            // Conversão de taxa anual para taxa mensal (Juros Compostos)
+            const taxaMensal = Math.pow(1 + (taxaAnual / 100), 1 / 12) - 1;
+            
+            let saldoAtual = aporteInicial;
+            let meses = 0;
+            const limiteMeses = 1200; // Proteção contra loops infinitos (100 anos)
+
+            while (saldoAtual < objetivo && meses < limiteMeses) {
+                saldoAtual = saldoAtual * (1 + taxaMensal) + aporteMensal;
+                meses++;
+            }
+
+            const anos = Math.floor(meses / 12);
+            const mesesRestantes = meses % 12;
+            
+            let tempoFormatado = "";
+            if (anos > 0) tempoFormatado += `${anos} ano(s) `;
+            if (mesesRestantes > 0 || anos === 0) tempoFormatado += `${mesesRestantes} mês(es)`;
+
+            resultBox.innerHTML = `
+                <strong>&gt; PROJEÇÃO_CONCLUÍDA:</strong><br>
+                • Tempo necessário: <span style="color: #22c55e; font-weight: bold;">${tempoFormatado}</span><br>
+                • Saldo bruto final: <span style="color: #22c55e; font-weight: bold;">R$ ${saldoAtual.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span><br>
+                • Capital investido: R$ ${(aporteInicial + (aporteMensal * meses)).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            `;
+        }
+    </script>
+</body>
+</html>
